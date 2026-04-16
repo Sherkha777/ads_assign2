@@ -39,6 +39,15 @@ public class MyLinkedList<T extends Comparable<T>> implements MyList<T> {
 
     @Override
     public void add(T item) {
+        MyNode<T> newNode = new MyNode<>(item);
+        if (head == null) {
+            head = tail = newNode;
+        } else {
+            tail.next = newNode;
+            newNode.prev = tail;
+            tail = newNode;
+        }
+        size++;
 
     }
 
@@ -64,7 +73,12 @@ public class MyLinkedList<T extends Comparable<T>> implements MyList<T> {
 
     @Override
     public T get(int index) {
-        return null;
+        if (index < 0 || index >= size) throw new IndexOutOfBoundsException();
+        MyNode<T> current = head;
+        for (int i = 0; i < index; i++) {
+            current = current.next;
+        }
+        return current.data;
     }
 
     @Override

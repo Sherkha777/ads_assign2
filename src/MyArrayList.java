@@ -1,7 +1,7 @@
 import java.util.Iterator;
 
 public class MyArrayList<T extends Comparable<T>> implements MyList<T>{
-    private Object[] elements; // Массив для хранения элементов [cite: 28]
+    private Object[] elements;
     private int size;
     public MyArrayList() {
         this.elements = new Object[10];
@@ -41,7 +41,8 @@ public class MyArrayList<T extends Comparable<T>> implements MyList<T>{
     @Override
     public void add(T item) {
         ensureCapacity();
-        elements[size++] = item; // [cite: 8]
+        elements[size++] = item;
+
     }
 
     @Override
@@ -66,12 +67,14 @@ public class MyArrayList<T extends Comparable<T>> implements MyList<T>{
 
     @Override
     public T get(int index) {
-        return null;
+        if (index < 0 || index >= size) throw new IndexOutOfBoundsException();
+        return (T) elements[index];
     }
 
     @Override
     public T getFirst() {
-        return null;
+        if (size == 0) return null;
+        return get(0);
     }
 
     @Override
@@ -97,10 +100,10 @@ public class MyArrayList<T extends Comparable<T>> implements MyList<T>{
     @Override
     @SuppressWarnings("unchecked")
     public void sort() {
-        // Простая сортировка, так как элементы расширяют Comparable [cite: 60]
         for (int i = 0; i < size - 1; i++) {
             for (int j = 0; j < size - i - 1; j++) {
-                if (((T) elements[j]).compareTo((T) elements[j + 1]) > 0) {
+                if (elements[j] != null && elements[j + 1] != null)
+                 if (((T) elements[j]).compareTo((T) elements[j + 1]) > 0) {
                     Object temp = elements[j];
                     elements[j] = elements[j + 1];
                     elements[j + 1] = temp;
@@ -135,6 +138,4 @@ public class MyArrayList<T extends Comparable<T>> implements MyList<T>{
         };
     }
 
-    // Не забудь добавить заглушки (empty methods) для остальных методов,
-    // чтобы не было красных ошибок.
 }
